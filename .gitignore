@@ -1,0 +1,6 @@
+__pycache__
+*.csv
+key
+rand
+secret
+testing.py
