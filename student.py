@@ -2,6 +2,7 @@ from userstatus import UserStatus
 from ranklistrow import RanklistRow
 from constants import cp1Div2Limit, cp1Div3Limit, cp1StartTime, cp1EndTime, cp1RatingBase, pointsOf, cp1PracticeLimit
 from exceptions import FailedRequestException
+from contest import Contest
 
 class Student:
 
@@ -22,7 +23,10 @@ class Student:
         self.ratingBase = ratingBase
         pass
 
-    def addDiv2contest(self, ranklistRow: RanklistRow, contestId):
+    def addDiv2contest(self, ranklistRow: RanklistRow, contest: Contest):
+        contestId = contest.id
+        if contest.startTime < self.startTime or contest.startTime > self.endTime:
+            return None
         if contestId in self.div2IDs:
             return None
         self.div2IDs.add(contestId)
@@ -30,7 +34,10 @@ class Student:
         self.div2Score += pts
         self.div2Score = max(0, min(self.div2Score, self.div2Limit))
 
-    def addDiv3contest(self, ranklistRow: RanklistRow, contestId, isDiv4 = False, multiplier = 1):
+    def addDiv3contest(self, ranklistRow: RanklistRow, contest: Contest, isDiv4 = False, multiplier = 1):
+        contestId = contest.id
+        if contest.startTime < self.startTime or contest.startTime > self.endTime:
+            return None
         if contestId in self.div3IDs:
             return None
         self.div3IDs.add(contestId)
@@ -56,6 +63,8 @@ class Student:
             if self.practiceScore > cp1PracticeLimit:
                 print("Extra points found for:", self.email, self.codeforcesUsername)
             self.practiceScore = min(cp1PracticeLimit, self.practiceScore)
+            if userStatus.hasSkippedSubmissions:
+                self.hasPlag = True
 
         except FailedRequestException:
             print("Invalid username for:", self.email)

@@ -55,6 +55,7 @@ def apiResponse(methodname:str, params:dict = {}):
     '''
     st = requestURL(methodname, params)
     resp = requests.get(st).json()
+    time.sleep(1) # dont wanna ddos mikey's laptop! xD
     if resp["status"] != "OK":
         raise FailedRequestException("Request status was \"FAILED\"")
     else:
