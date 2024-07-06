@@ -20,8 +20,11 @@ class ContestList:
             self.contestOfId[contest.id] = contest
             self.durationContests.append(contest)
 
+    def isValidContest(self, contestId):
+        return contestId in self.contestOfId
+
     def contestFromId(self, contestId):
-        return self.contestOfId.get(contestId)
+        return self.contestOfId[contestId]
 
     def contestList(self):
         return self.durationContests

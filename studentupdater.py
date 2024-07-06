@@ -11,7 +11,7 @@ class StudentUpdater:
         self.contestList = contestList
 
     def updateAllDiv2Points(self):
-        for contest in self.contestList:
+        for contest in self.contestList.contestList():
             if not contest.isDiv2:
                 continue
 
@@ -27,7 +27,7 @@ class StudentUpdater:
                 studentObject.addDiv2contest(ranklistrow, contest)
 
     def updateInContestDiv3Points(self):
-        for contest in self.contestList:
+        for contest in self.contestList.contestList():
             if not contest.isDiv3:
                 continue
 
@@ -44,7 +44,7 @@ class StudentUpdater:
 
     def updateInContestDiv4Points(self):
 
-        for contest in self.contestList:
+        for contest in self.contestList.contestList():
             if not contest.isDiv4:
                 continue
 
