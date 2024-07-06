@@ -3,12 +3,22 @@ from ranklistrow import RanklistRow
 from constants import cp1Div2Limit, cp1Div3Limit, cp1StartTime, cp1EndTime, cp1RatingBase, pointsOf, cp1PracticeLimit
 from exceptions import FailedRequestException
 from contest import Contest
+from contestlist import ContestList
 
 class Student:
 
-    def __init__(self, email:str, codeforcesUsername:str, div2Limit = cp1Div2Limit, div3Limit = cp1Div3Limit, startTime = cp1StartTime, endTime = cp1EndTime, ratingBase = cp1RatingBase):
+    def __init__(self, 
+                 email:str, 
+                 codeforcesUsername:str, 
+                 div2Limit = cp1Div2Limit, 
+                 div3Limit = cp1Div3Limit, 
+                 startTime = cp1StartTime, 
+                 endTime = cp1EndTime, 
+                 ratingBase = cp1RatingBase,
+                 isCP2 = False):
+
         self.email = email
-        self.codeforcesUsername = codeforcesUsername
+        self.codeforcesUsername = codeforcesUsername.lower()
         self.div2Score = 0
         self.div3Score = 0
         self.practiceScore = 0
@@ -21,6 +31,7 @@ class Student:
         self.endTime = endTime
         self.hasPlag = False
         self.ratingBase = ratingBase
+        self.isCP2 = isCP2
         pass
 
     def addDiv2contest(self, ranklistRow: RanklistRow, contest: Contest):
@@ -43,9 +54,9 @@ class Student:
         self.div3IDs.add(contestId)
         pts = ranklistRow.points
         if isDiv4:
-            self.div3Score += pts
-        else:
             self.div3Score += pts * multiplier 
+        else:
+            self.div3Score += pts
         self.div3Score = max(0, min(self.div3Score, self.div3Limit))
 
 
@@ -55,7 +66,7 @@ class Student:
         for solvedProblem in ranklistRow.solvedIndices:
             self.labScores[labHeader][solvedProblem] = max(self.labScores[labHeader].get(solvedProblem, 0), 0.4 if upsolve else 1)
 
-    def addPracticePoints(self):
+    def processStatus(self, contestList: ContestList):
         try:
             userStatus = UserStatus(self.codeforcesUsername, self.startTime, self.endTime)
             for submission in userStatus.acceptedProblemSubmissions.values():

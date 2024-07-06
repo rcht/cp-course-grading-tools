@@ -12,7 +12,7 @@ class Contest:
 
         self.isDiv4 = "Div. 4" in self.name 
 
-        self.isDiv3 = (not self.isDiv3) and ("Educational" in self.name or "Div. 3" in self.name)
+        self.isDiv3 = (not self.isDiv4) and ("Educational" in self.name or "Div. 3" in self.name)
 
         self.isDiv2 = ("Div. 2" in self.name or "Global" in self.name) and (not self.isDiv3)
 

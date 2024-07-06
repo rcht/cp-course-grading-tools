@@ -1,6 +1,6 @@
 class RanklistRow:
     def __init__(self, rankListRowJson):
-        self.handle = rankListRowJson["party"]["members"][0]["handle"] 
+        self.handle = rankListRowJson["party"]["members"][0]["handle"].lower()
         self.points = int(rankListRowJson["points"])
         indOrd = ord('A')
         self.solvedIndices = []
