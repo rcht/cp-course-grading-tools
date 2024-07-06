@@ -39,13 +39,33 @@ cp2Div3Limit = 15
 cp1Div4Multiplier = 1
 cp2Div4Multiplier = 0.75
 
-lab1Label = "Lab 1 score (/10)"
-lab2Label = "Lab 2 score (/10)"
-lab3Label = "Lab 3 score (/10)"
-lab4Label = "Lab 4 score (/10)"
-
-currentCP1Headers = [div2CP1Header, div3CP1Header, cp1PracticePointsHeader]
-currentCP2Headers = [div2CP2Header, div3CP2Header, cp2PracticePointsHeader]
-currentCombinedHeaders = currentCP1Headers + currentCP2Headers
-
-
+labIDs = {
+    "CP1":{
+        "Lab 1": {
+            "main": 529177,
+            "upsolve": 529363,
+        },
+        "Lab 2": {
+            "main": 531655,
+            "upsolve": 531682
+        },
+        "Lab 3": {
+            "main": 533994,
+            "upsolve": 534003
+        }
+    },
+    "CP2":{
+        "Lab 1": {
+            "main": 529178,
+            "upsolve": 529373,
+        },
+        "Lab 2": {
+            "main": 531632,
+            "upsolve": 531679
+        },
+        "Lab 3": {
+            "main": 534004,
+            "upsolve": 534005
+        }
+    }
+}

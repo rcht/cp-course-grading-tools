@@ -1,6 +1,9 @@
+from ranklistrow import RanklistRow
 from studentmap import StudentMap
+from student import Student
 from contestlist import ContestList
 from standings import Standings
+from constants import labIDs
 
 # from student import Student
 
@@ -68,3 +71,20 @@ class StudentUpdater:
         for student in self.studentMap.getStudentObjects():
 
             student.processStatus(self.contestList)
+
+    def updateLab(self, label: str, contestId: int, upsolve: bool):
+
+        standings = Standings(contestId)
+
+        for row in standings.rows:
+            uname = row.handle
+            if not self.studentMap.usernameIsStudent(uname):
+                continue
+            studentObject = self.studentMap.getStudentFromUsername(uname)
+            studentObject.addLab(label, row, upsolve)
+
+    def addAllLabs(self):
+        for courseName in labIDs:
+            for labLabel in labIDs[courseName]:
+                self.updateLab(courseName + ' ' + labLabel, labIDs[courseName][labLabel]["main"], False)
+                self.updateLab(courseName + ' ' + labLabel, labIDs[courseName][labLabel]["upsolve"], True)

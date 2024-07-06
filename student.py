@@ -72,6 +72,7 @@ class Student:
                 self.div2Score += pts
                 if self.div2Score >= cp1Div2Limit:
                     self.additionalDiv2Score += (self.div2Score - cp1Div2Limit)
+                    self.additionalDiv2Score = min(self.additionalDiv2Score, cp2Div2Limit)
                     self.div2Score = cp1Div2Limit
             else:
                 # only cp2 div 2 points left
@@ -201,5 +202,3 @@ class Student:
             print("INVALID", self.email, self.codeforcesUsername)
 
 
-class CombinedStudent(Student):
-    pass
